@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestão de Moradores</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilo básico das abas */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tabs button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    /* Oculta conteúdo de abas por padrão */
+    .tab-content {
+      display: none;
+    }
+
+    /* Exibe aba ativa */
+    .tab-content.active {
+      display: block;
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .result-box {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f5f5f5;
+    }
+
+    .morador-card,
+    .gasto-card {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏠 Gestão de Moradores</h1>
+
+    <!-- MENU DE ABAS -->
+    <div class="tabs">
+      <button onclick="abrirAba('aba-moradores')">👤 Moradores</button>
+      <button onclick="abrirAba('aba-gastos')">💰 Gastos</button>
+      <button onclick="abrirAba('aba-situacao')">📊 Situação</button>
+    </div>
+
+    <!-- ABA: MORADORES -->
+    <div id="aba-moradores" class="tab-content active">
+      <!-- Buscar Morador -->
+      <section>
+        <h2>🔍 Buscar Morador por ID</h2>
+        <div class="input-group">
+          <input type="number" id="buscar-id" placeholder="ID do morador" />
+          <button onclick="buscarMorador()">Buscar</button>
+        </div>
+        <div id="morador-unico" class="result-box"></div>
+      </section>
+
+      <!-- Listar Moradores -->
+      <section>
+        <h2>📋 Listar Todos os Moradores</h2>
+        <button onclick="listarMoradores()">Listar</button>
+        <table id="moradores-list">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Salário</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Criar Morador -->
+      <section>
+        <h2>➕ Criar Novo Morador</h2>
+        <div class="input-group">
+          <input type="text" id="nome" placeholder="Nome">
+          <input type="number" id="salario" placeholder="Salário">
+          <button onclick="criarMorador()">Criar</button>
+        </div>
+      </section>
+
+      <!-- Deletar Morador -->
+      <section>
+        <h2>❌ Deletar Morador por ID</h2>
+        <div class="input-group">
+          <input type="number" id="deletar-id" placeholder="ID do morador" />
+          <button onclick="deletarMorador()">Deletar</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABA: GASTOS -->
+    <div id="aba-gastos" class="tab-content">
+      <!-- Buscar Gastos de um Morador -->
+      <section>
+        <h2>🔍 Buscar Todos os Gastos de um Morador</h2>
+        <div class="input-group">
+          <input type="number" id="buscar-gasto-id" placeholder="ID do morador" />
+          <button onclick="buscarGasto()">Buscar</button>
+        </div>
+        <div id="gasto-unico" class="result-box"></div>
+      </section>
+
+      <!-- Listar Todos os Gastos -->
+      <section>
+        <h2>💰 Gastos dos Moradores</h2>
+        <button onclick="listarGastos()">Listar Todos os Gastos</button>
+        <table class="tabela-gastos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Morador</th>
+              <th>Data do Gasto</th>
+              <th>Descrição</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Criar Novo Gasto -->
+      <section>
+        <h3>➕ Criar Novo Gasto</h3>
+        <div class="input-group">
+          <input type="number" id="gasto-morador-id" placeholder="ID do morador">
+          <input type="date" id="data-do-gasto">
+          <input type="text" id="gasto-descricao" placeholder="Descrição do gasto">
+          <input type="number" id="gasto-valor" placeholder="Valor do gasto">
+          <button onclick="criarGasto()">Criar</button>
+        </div>
+      </section>
+
+      <!-- Deletar Gasto -->
+      <section>
+        <h3>❌ Deletar Gasto por ID</h3>
+        <div class="input-group">
+          <input type="number" id="deletar-gasto-id" placeholder="ID do gasto">
+          <button onclick="deletarGasto()">Deletar</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABA: SITUAÇÃO FINANCEIRA -->
+    <div id="aba-situacao" class="tab-content">
+      <section>
+        <h2>📊 Situação Financeira dos Moradores</h2>
+        <button onclick="mostrarSituacao()">Verificar Situação</button>
+        <div id="resultado-situacao" class="result-box"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script>
+    /**
+     * Ativa a aba correspondente ao botão clicado.
+     * @param {string} id - ID da aba a ser exibida
+     */
+    function abrirAba(id) {
+      const abas = document.querySelectorAll('.tab-content');
+      abas.forEach(aba => aba.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
