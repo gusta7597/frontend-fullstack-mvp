@@ -10,6 +10,6 @@ git clone https://github.com/gusta7597/frontend-fullstack-mvp.git
 cd frontend-fullstack-mvp
 ```
 
-### Clique duas vezes no arquivo .html
+### 2. Clique duas vezes no arquivo .html
 
-### 2. Uma aba deve abrir com as paginas da aplicação prontas para uso!
+### Uma aba deve abrir com as paginas da aplicação prontas para uso!
